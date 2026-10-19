@@ -1,0 +1,55 @@
+library(readxl)
+> 
+  > # Load data (skip the first row)
+  > plans <- read_excel(file.choose(), skip = 1)
+  >                                                                                 
+    > # Filter Indiana
+    > IN <- plans[plans[["State Code"]] == "IN", ]
+    > 
+      > # Print number of Indiana plans
+      > print(nrow(IN))
+    [1] 4429
+    > 
+      > # Get premium and deductible
+      > x <- as.numeric(gsub("[$,]", "", IN[["Premium Adult Individual Age 40"]]))
+      > y <- as.numeric(gsub("[$,]", "", IN[["Medical Deductible - Individual - Standard"]]))
+      > 
+        > # Keep valid numbers
+        > ok <- is.finite(x) & is.finite(y)
+        > 
+          > # Save graph
+          > png("Indiana_Premium_Deductible.png", width = 1000, height = 700)
+        > 
+          > plot(x[ok], y[ok],
+                 +      xlab = "Monthly Premium ($)",
+                 +      ylab = "Deductible ($)",
+                 +      main = "Indiana Marketplace Health Plans",
+                 +      pch = 16)
+        > 
+          > dev.off()
+        png 
+        2 
+        > 
+          > 
+          > # Display the graph in RStudio
+          > plot(x[ok], y[ok],
+                 +      xlab = "Monthly Premium ($)",
+                 +      ylab = "Deductible ($)",
+                 +      main = "Indiana Marketplace Health Plans",
+                 +      pch = 16)
+        > 
+          > # Save the graph as a PNG
+          > png("Indiana_Premium_Deductible.png",
+                +     width = 1000, height = 700)
+        > plot(x[ok], y[ok],
+               +      xlab = "Monthly Premium ($)",
+               +      ylab = "Deductible ($)",
+               +      main = "Indiana Marketplace Health Plans",
+               +      pch = 16)
+        > dev.off()
+        png 
+        2 
+        > 
+          > # Show where the PNG was saved
+          > getwd()
+        [1] "I:/Rclass"
